@@ -30,9 +30,10 @@ Fluxer loads them as one Quick CSS block.
 ### Channel list
 
 - On desktop widths (768px and up), in a community channel, the channel
-  sidebar is about 10rem wide instead of 20rem.
-- The collapsed column shows the server name header only. The channel list is
-  hidden.
+  sidebar is about 7rem wide instead of 20rem.
+- The collapsed column shows the server name header only. The header packs
+  the name and the caret at the left, so no empty space shows. The channel
+  list is hidden.
 - Hovering the sidebar expands it to the normal 20rem channel list, drawn over
   the chat area. The chat does not move or reflow. Moving the mouse out
   collapses it again.

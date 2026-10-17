@@ -79,7 +79,7 @@
 
 @media (min-width: 768px) {
 	:root {
-		--compact-channels-width: 10rem;
+		--compact-channels-width: 7rem;
 		--compact-channels-expanded-width: 20rem;
 	}
 
@@ -105,6 +105,21 @@
 	 * clips it, but hiding it also hides the narrow left edge. */
 	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.channel-list-content.channel-list-scroller-wrapper"] {
 		visibility: hidden !important;
+	}
+
+	/* Pack the header while the column is collapsed. The name and the caret
+	 * sit at the left, so the narrow column shows the name and no empty space. */
+	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.guild-header.header-content.context-menu"] {
+		padding-left: 0.5rem !important;
+		padding-right: 0.5rem !important;
+	}
+
+	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.guild-header.guild-name"] {
+		flex: 0 1 auto !important;
+	}
+
+	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.guild-header.caret-icon"] {
+		margin-left: 0 !important;
 	}
 
 	/* The resize handle sits at the narrow edge. Hide it, because the theme
