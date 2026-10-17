@@ -1,0 +1,73 @@
+/* Fluxer: compact member list (avatars only, full list on hover)
+ * Paste into User Settings > Look & feel > Theme > "Open theme studio…" > Quick CSS.
+ * Targets Fluxer's stable data-flx attributes. Row heights are left alone because
+ * the virtualized list positions rows from fixed heights in JS. */
+
+@media (min-width: 768px) {
+	/* Narrow layout slot; also positions the divider between chat and list. */
+	:root {
+		--compact-members-width: 3.75rem;
+		--compact-members-expanded-width: 16.5rem;
+		--layout-member-list-width: var(--compact-members-width) !important;
+	}
+
+	/* The frame around the member list. Its negative margin cancels its extra
+	 * width, so the grid column (and the chat) stays narrow while it expands. */
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]) {
+		width: var(--compact-members-width) !important;
+		z-index: 10;
+	}
+
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):hover {
+		width: var(--compact-members-expanded-width) !important;
+		margin-left: calc(var(--compact-members-width) - var(--compact-members-expanded-width));
+		box-shadow: -0.5rem 0 1rem rgb(0 0 0 / 0.25);
+	}
+
+	[data-flx="channel.member-list-container.member-list-container"] {
+		width: 100% !important;
+	}
+
+	/* Everything below applies only while collapsed. */
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.member-list-container.member-list-scroller"] {
+		padding-left: 0.25rem !important;
+		padding-right: 0.25rem !important;
+	}
+
+	/* Member rows: center the avatar, drop everything else. */
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.member-list-item.grid"] {
+		grid-template-columns: 1fr !important;
+		justify-items: center;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.member-list-item.content"] {
+		gap: 0 !important;
+	}
+
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.member-list-item.grid"] > :not([data-flx="channel.member-list-item.content"]),
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.member-list-item.user-info-container"] {
+		display: none !important;
+	}
+
+	/* Group headers keep their height but show a divider instead of text. */
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.channel-members.group-dm-member-list-group.group-header"] {
+		position: relative;
+	}
+
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.channel-members.lazy-member-list.virtual-row.group"] > *,
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.channel-members.group-dm-member-list-group.group-header"] > * {
+		display: none !important;
+	}
+
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.channel-members.lazy-member-list.virtual-row.group"]::after,
+	[data-flx="app.outline-frame.frame"]:has(> [data-flx="app.outline-frame.content-wrapper"] > [data-flx="app.outline-frame.body"] > [data-flx="channel.member-list-container.member-list-container"]):not(:hover) [data-flx="channel.channel-members.group-dm-member-list-group.group-header"]::after {
+		content: "";
+		position: absolute;
+		left: 0.5rem;
+		right: 0.5rem;
+		top: 50%;
+		border-top: 1px solid var(--border-color, currentColor);
+	}
+}
