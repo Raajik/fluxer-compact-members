@@ -73,64 +73,94 @@
 }
 
 /* Fluxer: compact channel list (server name only, full list on hover)
- * The column narrows to the server name. Hovering the column shows the
- * channel list as a dropdown over the chat. This is the same idea as the
- * member list above. */
+ * The channel column collapses to zero width. The server name floats at the
+ * top left and opens the channel list on hover. The chat keeps the width. */
 
 @media (min-width: 768px) {
 	:root {
-		--compact-channels-width: 7rem;
 		--compact-channels-expanded-width: 20rem;
+		/* Room for the floating server name and the bottom-left user panel.
+		 * The chat header and the composer stay clear of both. */
+		--compact-channels-gutter: 8rem;
+		--compact-channels-user-panel-width: 12.5rem;
 	}
 
-	/* Narrow the layout slot only on community channel routes. The direct
-	 * message, Discovery and Favorites sidebars keep their width. */
+	/* Zero-width layout slot on community channel routes only. */
 	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) {
-		--layout-sidebar-width: var(--compact-channels-width) !important;
+		--layout-sidebar-width: 0rem !important;
 	}
 
-	/* The channel sidebar. It grows to the right over the chat, so the chat
-	 * stays in place. */
+	[data-flx^="app.guild-layout.guild-layout-content"]:has(> [data-flx="app.guild-sidebar.guild-navbar"]) {
+		grid-template-columns: 0 minmax(0, 1fr) !important;
+	}
+
+	/* The sidebar becomes an overlay. It takes no width. */
 	[data-flx="app.guild-sidebar.guild-navbar"] {
+		width: 0 !important;
+		overflow: visible !important;
 		z-index: 10;
 	}
 
-	[data-flx="app.guild-sidebar.guild-navbar"]:hover,
-	[data-flx="app.guild-sidebar.guild-navbar"]:focus-within {
-		width: var(--compact-channels-expanded-width) !important;
-		box-shadow: 0.5rem 0 1rem rgb(0 0 0 / 0.25);
+	/* Float the server name at the top left. It is the hover target. */
+	[data-flx="app.guild-sidebar.guild-navbar"] > [data-flx="app.guild-header.header-wrapper"] {
+		position: absolute !important;
+		top: 0;
+		left: 0;
+		width: max-content !important;
+		max-width: var(--compact-channels-gutter);
+		background-color: var(--background-secondary);
 	}
 
-	/* Hide the channel list while the column is collapsed. The container
-	 * clips it, but hiding it also hides the narrow left edge. */
-	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.channel-list-content.channel-list-scroller-wrapper"] {
-		visibility: hidden !important;
-	}
-
-	/* Pack the header while the column is collapsed. The name and the caret
-	 * sit at the left, so the narrow column shows the name and no empty space. */
-	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.guild-header.header-content.context-menu"] {
+	/* Pack the floating header. */
+	[data-flx="app.guild-sidebar.guild-navbar"] > [data-flx="app.guild-header.header-wrapper"] [data-flx="app.guild-header.header-content.context-menu"] {
 		padding-left: 0.5rem !important;
 		padding-right: 0.5rem !important;
 	}
 
-	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.guild-header.guild-name"] {
+	[data-flx="app.guild-sidebar.guild-navbar"] > [data-flx="app.guild-header.header-wrapper"] [data-flx="app.guild-header.guild-name"] {
 		flex: 0 1 auto !important;
 	}
 
-	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.guild-header.caret-icon"] {
+	[data-flx="app.guild-sidebar.guild-navbar"] > [data-flx="app.guild-header.header-wrapper"] [data-flx="app.guild-header.caret-icon"] {
 		margin-left: 0 !important;
 	}
 
-	/* The resize handle sits at the narrow edge. Hide it, because the theme
-	 * fixes the width. */
-	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="app.outline-frame.sidebar-resize-handle"] {
-		display: none !important;
+	/* The channel list drops below the server name. */
+	[data-flx="app.guild-sidebar.guild-navbar"] > [data-flx="app.channel-list-content.channel-list-scroller-wrapper"] {
+		position: absolute !important;
+		top: var(--layout-header-height);
+		left: 0;
+		bottom: 0;
+		width: var(--compact-channels-expanded-width) !important;
+		height: auto !important;
+		box-shadow: 0.5rem 0 1rem rgb(0 0 0 / 0.25);
+		visibility: hidden !important;
 	}
 
-	/* The divider also sits at the narrow edge. Hide it while the list is
-	 * open, because the open list covers it. */
-	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-sidebar.guild-navbar"]:hover, [data-flx="app.guild-sidebar.guild-navbar"]:focus-within) [data-flx="app.outline-frame.divider"] {
+	[data-flx="app.guild-sidebar.guild-navbar"]:hover > [data-flx="app.channel-list-content.channel-list-scroller-wrapper"],
+	[data-flx="app.guild-sidebar.guild-navbar"]:focus-within > [data-flx="app.channel-list-content.channel-list-scroller-wrapper"] {
+		visibility: visible !important;
+	}
+
+	/* Keep the channel header and the composer clear of the floating name and
+	 * the bottom-left user panel. */
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="channel.channel-header.header-container"] {
+		padding-left: var(--compact-channels-gutter) !important;
+	}
+
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="channel.channel-chat-layout.textarea-area"] {
+		padding-left: var(--compact-channels-gutter) !important;
+	}
+
+	/* The bottom-left user panel keeps its controls. Its width sets the
+	 * composer offset above. */
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="app.guilds-layout.user-area-wrapper"] {
+		width: var(--compact-channels-user-panel-width) !important;
+	}
+
+	/* Hide the divider and the resize handle. The slot is zero wide. */
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="app.outline-frame.sidebar-resize-handle"],
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="app.outline-frame.divider"] {
 		display: none !important;
 	}
 }

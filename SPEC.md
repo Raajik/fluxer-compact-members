@@ -30,13 +30,13 @@ Fluxer loads them as one Quick CSS block.
 ### Channel list
 
 - On desktop widths (768px and up), in a community channel, the channel
-  sidebar is about 7rem wide instead of 20rem.
-- The collapsed column shows the server name header only. The header packs
-  the name and the caret at the left, so no empty space shows. The channel
-  list is hidden.
-- Hovering the sidebar expands it to the normal 20rem channel list, drawn over
-  the chat area. The chat does not move or reflow. Moving the mouse out
-  collapses it again.
+  sidebar has no width. The server name floats at the top left and opens the
+  channel list on hover.
+- Hovering or focusing the server name shows the normal 20rem channel list as
+  a dropdown over the chat. The chat does not move or reflow. Moving the mouse
+  out collapses it again.
+- The chat header and the composer keep clear of the floating server name and
+  the bottom-left user panel.
 - Clicking the server name still opens the community menu. Channel clicks and
   the channel context menu still work while the list is open.
 - Direct message, Discovery and Favorites sidebars keep their width.
@@ -66,5 +66,5 @@ Fluxer loads them as one Quick CSS block.
   shift sideways.
 - Hovering the channel sidebar shows the channel list over the chat, and the
   chat text does not shift sideways.
-- The community menu opens from the server name in the collapsed column.
+- The community menu opens from the floating server name.
 - The DM, Discovery and Favorites sidebars look unchanged.
