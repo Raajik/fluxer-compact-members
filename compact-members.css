@@ -183,3 +183,13 @@
 		border-bottom-width: 0.0625rem !important;
 	}
 }
+
+/* Fluxer: a green ring on your own avatar (bottom left and member list) while you talk.
+ * Fluxer has no "I am talking" marker. Your own voice row in the channel list
+ * has the "current connection" class only while you are silent. So: you are
+ * in voice, a voice row talks, and no row has that class. Then you talk. */
+
+body:has([data-flx="app.user-area.user-area-inner.voice-connection-wrapper"]):has([class*="__participantRowSpeaking___"]):not(:has([class*="__participantRowCurrentConnection___"], [data-flx="app.channel-list-content.collapsed-channel-avatar-stack"])) :is([data-flx="app.guilds-layout.user-area-wrapper"], [data-flx="channel.member-list-container.member-list-container"]) [data-flx-user-self="true"] {
+	border-radius: 50%;
+	outline: 0.1875rem solid #22c55e;
+}

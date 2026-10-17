@@ -49,12 +49,36 @@ because Fluxer loads them as one Quick CSS block.
   chat. Moving the pointer out hides it again.
 - The user panel and the chat do not move.
 
+### Talking ring on your own avatar
+
+- While you talk in a voice channel, your avatar in the bottom-left user panel
+  and your avatar in the member list get the same green ring that Fluxer
+  shows on talking voice avatars.
+- Other members get no ring. Their talking rows do not show the user, and CSS
+  cannot compare user IDs.
+- The ring goes away when you stop talking.
+- Nothing to set up. The snippet works for every user as is.
+- Fluxer has no "I am talking" marker. Your own voice row in the channel list
+  has a "current connection" class only while you are silent. Fluxer removes
+  it while you talk. So the ring shows when all of these are true:
+  - you are in a voice channel,
+  - a voice row in the channel list shows talking,
+  - no voice row has the "current connection" class.
+- Your voice channel must show in the channel list (also while the list is
+  hidden). If its category is collapsed, the ring does not show.
+- Known false ring: you view a different server while you are in voice, and
+  somebody talks in a voice channel of that server.
+
 ## Constraints
 
 - Pure CSS, pasted into User Settings → Look & feel → Theme → "Open theme
   studio…" → Quick CSS. No plugin injector or client mod needed.
 - Select elements only by Fluxer's `data-flx` attributes, which the project
   keeps stable for theming. Never select by the hashed CSS-module class names.
+  One exception: the talking state has no `data-flx` marker, so the talking
+  ring matches the class-name parts `__participantRowSpeaking___` and
+  `__participantRowCurrentConnection___`. Fluxer builds module class names as
+  `[name]__[local]___[hash]`, so these parts have no hash.
 - Do not change member row heights. The member list is virtualized, and it
   positions rows from fixed pixel heights in JS (`MEMBER_LIST_ITEM_HEIGHT_PX`,
   `MEMBER_LIST_GROUP_HEADER_HEIGHT_PX`). Changing heights in CSS would make
@@ -81,3 +105,5 @@ because Fluxer loads them as one Quick CSS block.
 - Hovering the bottom-left user panel shows the panel, and the chat does not
   move.
 - The voice controls in the panel still work while the panel is shown.
+- In a voice channel, your bottom-left avatar and your member list avatar
+  have a green ring while you talk. It has no ring while you are silent, also while others talk.
