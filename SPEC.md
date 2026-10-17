@@ -4,8 +4,8 @@ A custom CSS snippet for Fluxer (https://fluxer.app). It shrinks the member
 list to a narrow column of avatars. It also shrinks the channel list to the
 server name. Hovering a shrunk column expands it over the chat.
 
-The snippet lives in `compact-members.css`. It holds both behaviors, because
-Fluxer loads them as one Quick CSS block.
+The snippet lives in `compact-members.css`. It holds all the behaviors,
+because Fluxer loads them as one Quick CSS block.
 
 ## Behavior
 
@@ -41,6 +41,14 @@ Fluxer loads them as one Quick CSS block.
   the channel context menu still work while the list is open.
 - Direct message, Discovery and Favorites sidebars keep their width.
 
+### Voice connection panel
+
+- On desktop widths (768px and up), the "In voice chat" panel above the
+  bottom-left user panel is hidden. It takes no vertical space.
+- Hovering or focusing the bottom-left user panel shows the panel over the
+  chat. Moving the pointer out hides it again.
+- The user panel and the chat do not move.
+
 ## Constraints
 
 - Pure CSS, pasted into User Settings → Look & feel → Theme → "Open theme
@@ -68,3 +76,8 @@ Fluxer loads them as one Quick CSS block.
   chat text does not shift sideways.
 - The community menu opens from the floating server name.
 - The DM, Discovery and Favorites sidebars look unchanged.
+- The "In voice chat" panel is not visible while the pointer is away from the
+  bottom-left user panel.
+- Hovering the bottom-left user panel shows the panel, and the chat does not
+  move.
+- The voice controls in the panel still work while the panel is shown.

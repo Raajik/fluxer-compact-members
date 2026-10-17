@@ -164,3 +164,22 @@
 		display: none !important;
 	}
 }
+
+/* Fluxer: the voice connection panel shows only on hover.
+ * The "In voice chat" panel sits above the bottom-left user panel. Hovering or
+ * focusing that panel reveals it over the chat. The chat keeps its position. */
+
+@media (min-width: 768px) {
+	[data-flx="app.user-area.user-area-inner.voice-connection-wrapper"] {
+		height: 0 !important;
+		overflow: hidden !important;
+		border-bottom-width: 0 !important;
+	}
+
+	[data-flx="app.guilds-layout.user-area-wrapper"]:hover [data-flx="app.user-area.user-area-inner.voice-connection-wrapper"],
+	[data-flx="app.guilds-layout.user-area-wrapper"]:focus-within [data-flx="app.user-area.user-area-inner.voice-connection-wrapper"] {
+		height: auto !important;
+		overflow: visible !important;
+		border-bottom-width: 0.0625rem !important;
+	}
+}
