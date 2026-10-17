@@ -79,9 +79,10 @@
 @media (min-width: 768px) {
 	:root {
 		--compact-channels-expanded-width: 20rem;
-		/* Room for the floating server name and the bottom-left user panel.
-		 * The chat header and the composer stay clear of both. */
-		--compact-channels-gutter: 10rem;
+		/* Room for the small floating server name. The chat header keeps clear. */
+		--compact-channels-gutter: 3rem;
+		/* Room for the bottom-left user panel. The composer keeps clear of it. */
+		--compact-channels-composer-offset: 8rem;
 		--compact-channels-user-panel-width: 12.5rem;
 	}
 
@@ -148,7 +149,7 @@
 	}
 
 	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="channel.channel-chat-layout.textarea-area"] {
-		padding-left: var(--compact-channels-gutter) !important;
+		padding-left: var(--compact-channels-composer-offset) !important;
 	}
 
 	/* The bottom-left user panel keeps its controls. Its width sets the
