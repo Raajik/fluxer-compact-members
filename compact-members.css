@@ -81,7 +81,7 @@
 		--compact-channels-expanded-width: 20rem;
 		/* Room for the floating server name and the bottom-left user panel.
 		 * The chat header and the composer stay clear of both. */
-		--compact-channels-gutter: 8rem;
+		--compact-channels-gutter: 10rem;
 		--compact-channels-user-panel-width: 12.5rem;
 	}
 
@@ -106,8 +106,7 @@
 		position: absolute !important;
 		top: 0;
 		left: 0;
-		width: max-content !important;
-		max-width: var(--compact-channels-gutter);
+		width: var(--compact-channels-gutter) !important;
 		background-color: var(--background-secondary);
 	}
 
