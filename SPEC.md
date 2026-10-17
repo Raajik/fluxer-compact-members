@@ -30,8 +30,8 @@ Fluxer loads them as one Quick CSS block.
 ### Channel list
 
 - On desktop widths (768px and up), in a community channel, the channel
-  sidebar has no width. The server name floats at the top left and opens the
-  channel list on hover.
+  sidebar has no width. A small control floats at the top left. It shows the
+  server name and opens the channel list on hover.
 - Hovering or focusing the server name shows the normal 20rem channel list as
   a dropdown over the chat. The chat does not move or reflow. Moving the mouse
   out collapses it again.
