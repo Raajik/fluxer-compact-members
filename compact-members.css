@@ -71,3 +71,51 @@
 		border-top: 1px solid var(--border-color, currentColor);
 	}
 }
+
+/* Fluxer: compact channel list (server name only, full list on hover)
+ * The column narrows to the server name. Hovering the column shows the
+ * channel list as a dropdown over the chat. This is the same idea as the
+ * member list above. */
+
+@media (min-width: 768px) {
+	:root {
+		--compact-channels-width: 10rem;
+		--compact-channels-expanded-width: 20rem;
+	}
+
+	/* Narrow the layout slot only on community channel routes. The direct
+	 * message, Discovery and Favorites sidebars keep their width. */
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) {
+		--layout-sidebar-width: var(--compact-channels-width) !important;
+	}
+
+	/* The channel sidebar. It grows to the right over the chat, so the chat
+	 * stays in place. */
+	[data-flx="app.guild-sidebar.guild-navbar"] {
+		z-index: 10;
+	}
+
+	[data-flx="app.guild-sidebar.guild-navbar"]:hover,
+	[data-flx="app.guild-sidebar.guild-navbar"]:focus-within {
+		width: var(--compact-channels-expanded-width) !important;
+		box-shadow: 0.5rem 0 1rem rgb(0 0 0 / 0.25);
+	}
+
+	/* Hide the channel list while the column is collapsed. The container
+	 * clips it, but hiding it also hides the narrow left edge. */
+	[data-flx="app.guild-sidebar.guild-navbar"]:not(:hover):not(:focus-within) [data-flx="app.channel-list-content.channel-list-scroller-wrapper"] {
+		visibility: hidden !important;
+	}
+
+	/* The resize handle sits at the narrow edge. Hide it, because the theme
+	 * fixes the width. */
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-header.header-wrapper"]) [data-flx="app.outline-frame.sidebar-resize-handle"] {
+		display: none !important;
+	}
+
+	/* The divider also sits at the narrow edge. Hide it while the list is
+	 * open, because the open list covers it. */
+	[data-flx="app.guilds-layout.guilds-layout"]:has([data-flx="app.guild-sidebar.guild-navbar"]:hover, [data-flx="app.guild-sidebar.guild-navbar"]:focus-within) [data-flx="app.outline-frame.divider"] {
+		display: none !important;
+	}
+}
